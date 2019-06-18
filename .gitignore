@@ -1,0 +1,11 @@
+# ignore all logs
+*.log
+*.dll
+*.exe
+*.pdb
+
+bin/
+.vs/
+obj/
+.git.
+.vscode
