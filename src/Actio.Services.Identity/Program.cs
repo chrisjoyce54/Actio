@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Actio.Common.Events;
+using Actio.Common.Services;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +16,12 @@ namespace Actio.Services.Identity
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            ServiceHost.Create<Startup>(args)
+                .UseRabbitMq()
+                .SubscribeToCommand<ActivityCreated>()
+                .Build()
+                .Run();
+            //CreateWebHostBuilder(args).Build().Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
